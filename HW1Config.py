@@ -2,7 +2,9 @@ from UCICNN import CNNmodel
 from UCIMLP import MLPmodel
 from CIFARCNN import CifarCNNmodel
 from CIFARMLP import CifarMLPModel
+from PCAMMLP import PcamMLPModel
 from CifarPreprocessing import getData
+from PCamPreprocessing import getPcamData
 import pandas as pd
 
 # X_train = pd.read_csv(r'adult\xtrain.csv')
@@ -13,9 +15,12 @@ import pandas as pd
 # y_test = y_test['income']
 # y_train = y_train['income']
 
-# MLPmodel(X_train, y_train, X_test, y_test, 64, 10)
-# CNNmodel(X_train, y_train, X_test, y_test, 64, 8)
+# MLPmodel(X_train, y_train, X_test, y_test, 64, 10, 0.001)
+# CNNmodel(X_train, y_train, X_test, y_test, 64, 8, 0.001)
 
-X_train, y_train, X_test, y_test = getData()
-# CifarCNNmodel(X_train, y_train, X_test, y_test, 64, 12)
-CifarMLPModel(X_train, y_train, X_test, y_test, 64, 20)
+# X_train, y_train, X_test, y_test = getData()
+# CifarCNNmodel(X_train, y_train, X_test, y_test, 64, 12, 0.001)
+# CifarMLPModel(X_train, y_train, X_test, y_test, 64, 20, 0.001)
+
+train_loader, test_loader = getPcamData()
+PcamMLPModel(train_loader, test_loader, 12, 0.001)

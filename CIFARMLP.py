@@ -5,7 +5,7 @@ import torch
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, ConfusionMatrixDisplay, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 
-def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount):
+def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount, learn):
     model = torch.nn.Sequential(
         torch.nn.Linear(3072, 1024),
         torch.nn.BatchNorm1d(1024),
@@ -29,7 +29,7 @@ def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount):
         torch.nn.Linear(128, 100)
     )
 
-    optimizer = torch.optim.Adam(model.parameters())#lr = 0.001
+    optimizer = torch.optim.Adam(model.parameters(), lr = learn)
     lossFn = torch.nn.CrossEntropyLoss()
 
     X_train_tensor = torch.tensor(X_train).float() /255.0

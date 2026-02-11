@@ -5,7 +5,7 @@ import torch
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, ConfusionMatrixDisplay, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 
-def MLPmodel(X_train, y_train, X_test, y_test, batchCount, epochCount):
+def MLPmodel(X_train, y_train, X_test, y_test, batchCount, epochCount, learn):
     X_train, X_test = X_train.align(X_test, join='left', axis=1, fill_value=0)
 
     model = torch.nn.Sequential(
@@ -19,7 +19,7 @@ def MLPmodel(X_train, y_train, X_test, y_test, batchCount, epochCount):
         torch.nn.Linear(16,1)
     )
 
-    optimizer = torch.optim.Adam(model.parameters())#lr = 0.001
+    optimizer = torch.optim.Adam(model.parameters(), lr=learn)
     lossFn = torch.nn.BCEWithLogitsLoss()
 
     X_train_tensor = torch.tensor(X_train.values, dtype=torch.float32)
