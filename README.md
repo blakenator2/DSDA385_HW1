@@ -10,14 +10,14 @@ CIFAR-100       MLP              0.2703        0.2632        147.31748056411743
 CIFAR-10        CNN              0.4522        0.4370        492.013863325119                       A deeper model would do much better, 
                                                                                                    but I lack the computing time to do so
 
-PCam            MLP
-PCam            CNN
+PCam            MLP             0.3645         0.2877       3016.0187394019273
+PCam            CNN             0.6231          0.3687      3487.9128496092157
 
 
 The objective of this homework assignment was to get comfortable in the pytorch library, to learn the differences in certain types of machine learning models, and to learn how these different models perform on different types of data. 
 Each of my MLPs and CNNs were split into different files since I wanted them to be easily accessible and readable.
 
-All layers with activation functions had ReLU functions as it is widely regarded as the best general activation function. The loss I used was binary cross entropy or cross entropy depending on if it was binary classification or not as that is what I am used to working with. All of my models will include an inverse pyramid style of neuron sizes, ex. 128, 64, 32, 16. This allows for more depth while not overfitting the model.
+All layers with activation functions had ReLU functions as it is widely regarded as the best general activation function. The loss I used was binary cross entropy or cross entropy depending on if it was binary classification or not as that is what I am used to working with. All of my models will include an inverse pyramid style of neuron sizes, ex. 128, 64, 32, 16. This allows for more depth while not overfitting the model. All rows that include dropout, basically all that are not input and output layers, have a dropout rate of 0.2 to prevent some overfitting, but still keep most of the neurons available.
 
 The adult data preprocessing was super interesting since it was a split of numerical and categorical data. Since basic machine learning models, like mine, cannot take categorical data, I had to convert all of the categorical data into numerical data. I did this through a large dictionary in my UCIDataPreprocessing.py file. This would allow the categorical sections to keep their semantic meaning but allow the machine to learn off of them.
 
@@ -36,4 +36,6 @@ The MLP for the Cifar-100 dataset had a 3072 input layer as that was the amount 
 
 For the PCam dataset, I was able to find the original github repository and download the training and testing files from there. I was then able to use the h5py library to read them and split those files into training and testing files.
 
-The CNN for the PCam dataset had 4 convolutional blocks. All of which had a 3x3 kernel size and included batch normalization. They all also included pooling to reduce dinmensionality. The original input layer is size of 3 since RGB is 3 values. Then we go to 32, 64, 128, and 256 layers. I then 
+The CNN for the PCam dataset had 4 convolutional blocks. All of which had a 3x3 kernel size and included batch normalization. They all also included pooling to reduce dinmensionality. The original input layer is size of 3 since RGB is 3 values. Then we go to 32, 64, 128, and 256 layers. I then put those filtered layers through an MLP for classisfication. This has a layer of 9216, the size of the flattened CNN, which feeds into a layer of 512 neurons. This batch, and the next layer of 128, are both normalized. The layer of 128 feeds into the output neuron since this is binary classification.
+
+The MLP for the Pcam had 3 hidden layers since it has a large amount of data, these layers were also quite large and all included normalization. The input layer had 27648 neurons, one for each pixel, and fed into a layer of 2048. This layer then fed into one of size 1024, then 512, then 2256, then the output layer. This should help train for the complexity of the dataset without overfitting. However, this model was extremely overfit. This is definitely due to the large number of neurons. If I were to do this again I would minimize the amount of neurons by a lot!
