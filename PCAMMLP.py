@@ -55,6 +55,7 @@ def PcamMLPModel(X_train, y_train, X_test, y_test, epochCount, learn):
     start = time.time()
     for epoch in range(epochs):
         model.train()
+        print(epoch)
         
         running_train_loss = 0.0
         num_batches = 0
