@@ -1,5 +1,4 @@
 from torchvision.datasets import CIFAR100
-import pandas as pd
 
 def getData():
     X_train = CIFAR100(
