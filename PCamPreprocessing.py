@@ -1,42 +1,29 @@
-import torch
-from torch.utils.data import DataLoader
-from torchvision.datasets import PCAM
-from torchvision import transforms
+import h5py
+import numpy as np
+from pathlib import Path
 
 def getPcamData():
-
-    transform = transforms.Compose([transforms.ToTensor(), ])
-        
-    X_train = PCAM(
-    root=r"Pcam",
-    split="train",
-    download=True,
-    transform=transform
-    )
-
-    X_test = PCAM(
-        root=r"Pcam",
-        download=True,
-        transform=transform
-    )
-
-    train_loader = DataLoader(
-        X_train,
-        batch_size=64,
-        shuffle=True,
-        num_workers=2
-    )
+    download_dir = Path(r"Pcam")
     
-    test_loader = DataLoader(
-        X_test,
-        batch_size=64,
-        shuffle=False,
-        num_workers=2
-    )
+    with h5py.File(download_dir / "camelyonpatch_level_2_split_train_x.h5", 'r') as f:
+        X_train = f['x'][:]
+    
+    with h5py.File(download_dir / "camelyonpatch_level_2_split_train_y.h5", 'r') as f:
+        y_train = f['y'][:].squeeze() 
 
-    print(f"Train samples: {len(X_train)}")
-    print(f"Test samples: {len(X_test)}")
-    print(f"Image shape: 96x96x3")
-    print(f"Number of classes: 2 (binary classification)")
+    with h5py.File(download_dir / "camelyonpatch_level_2_split_test_x.h5", 'r') as f:
+        X_test = f['x'][:]
+    
+    with h5py.File(download_dir / "camelyonpatch_level_2_split_test_y.h5", 'r') as f:
+        y_test = f['y'][:].squeeze()
+    
+    print(f"\nData loaded successfully!")
+    print(f"X_train shape: {X_train.shape}")  # Should be (N, 96, 96, 3)
+    print(f"y_train shape: {y_train.shape}")  # Should be (N,)
+    print(f"X_test shape: {X_test.shape}")
+    print(f"y_test shape: {y_test.shape}")
+    print(f"Label distribution - Train: {np.bincount(y_train)}")
+    print(f"Label distribution - Test: {np.bincount(y_test)}")
+    
+    return X_train, y_train, X_test, y_test
 
-    return train_loader, test_loader

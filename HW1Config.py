@@ -3,6 +3,7 @@ from UCIMLP import MLPmodel
 from CIFARCNN import CifarCNNmodel
 from CIFARMLP import CifarMLPModel
 from PCAMMLP import PcamMLPModel
+from PCAMCNN import PcamCNNModel
 from CifarPreprocessing import getData
 from PCamPreprocessing import getPcamData
 import pandas as pd
@@ -22,5 +23,5 @@ import pandas as pd
 # CifarCNNmodel(X_train, y_train, X_test, y_test, 64, 12, 0.001)
 # CifarMLPModel(X_train, y_train, X_test, y_test, 64, 20, 0.001)
 
-train_loader, test_loader = getPcamData()
-PcamMLPModel(train_loader, test_loader, 12, 0.001)
+X_train, y_train, X_test, y_test = getPcamData()
+PcamMLPModel(X_train, y_train, X_test, y_test, 12, 0.001)
