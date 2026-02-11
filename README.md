@@ -1,12 +1,13 @@
 # DSDA385_HW1
 Machine Learning Capstone Homework 1
 
-Dataset     Architecture        Accuracy        F1      Notes
-Adult           MLP
-Adult           CNN
+Dataset     Architecture        Accuracy        F1          Time to Train (s)                      Notes
+Adult           MLP              0.7900        0.4142       6.296967506408691                      Using class weights or a custom loss  
+                                                                                                   function could help the accuracy
+Adult           CNN              0.7947        0.3112       15.32059931755066
 
-CIFAR-100       MLP
-CIFAR-10        CNN
+CIFAR-100       MLP              
+CIFAR-10        CNN              0.4522       0.4370        492.013863325119
 
 PCam            MLP
 PCam            CNN
