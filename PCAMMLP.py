@@ -103,3 +103,47 @@ def PcamMLPModel(X_train, y_train, X_test, y_test, epochCount, learn):
             print(f'Epoch [{epoch+1}/{epochs}] '
                 f'Train Loss: {epoch_train_loss:.4f} '
                 f'Val Loss: {epoch_val_loss:.4f}')
+    
+    # Evaluation
+    model.eval()
+    with torch.no_grad():
+        predictions = torch.sigmoid(model(X_test_tensor))
+        predicted_classes = torch.argmax(predictions, dim=1)
+        
+        # Convert to numpy arrays for sklearn
+        y_pred = predicted_classes.cpu().numpy().flatten()  # or .squeeze()
+        y_true = y_test_tensor.cpu().numpy().flatten()
+        
+        # Sklearn metrics
+        accuracy = accuracy_score(y_true, y_pred)
+        print(f'Test Accuracy: {accuracy:.4f}')
+        
+        # Classification Report
+        print('\nClassification Report:')
+        print(classification_report(y_true, y_pred))
+        
+        # Plot Confusion Matrix
+        cm = confusion_matrix(y_true, y_pred)
+        num_classes = len(np.unique(y_true))
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[str(i) for i in range(num_classes)])
+        disp.plot(cmap='Blues')
+        plt.title('Confusion Matrix')
+        plt.show()
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(train_losses, label='Training Loss')
+    plt.plot(val_losses, label='Validation Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training vs Validation Loss')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    precision = precision_score(y_true, y_pred, average='weighted')
+    recall = recall_score(y_true, y_pred, average='weighted')
+    f1 = f1_score(y_true, y_pred, average='weighted')
+
+    print(f'Precision: {precision:.4f}')
+    print(f'Recall: {recall:.4f}')
+    print(f'F1 Score: {f1:.4f}')
