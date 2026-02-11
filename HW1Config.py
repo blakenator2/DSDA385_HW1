@@ -24,4 +24,5 @@ import pandas as pd
 # CifarMLPModel(X_train, y_train, X_test, y_test, 64, 20, 0.001)
 
 X_train, y_train, X_test, y_test = getPcamData()
-PcamMLPModel(X_train, y_train, X_test, y_test, 12, 0.001)
+#PcamMLPModel(X_train, y_train, X_test, y_test, 12, 0.001)
+PcamCNNModel(X_train, y_train, X_test, y_test, 12, 0.001)

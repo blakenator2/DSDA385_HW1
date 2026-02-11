@@ -8,50 +8,43 @@ import matplotlib.pyplot as plt
 
 def PcamCNNModel(X_train, y_train, X_test, y_test, epochCount, learn):
     model = torch.nn.Sequential(
-        # Input: (batch, 3, 96, 96)
-        
-        # Conv Block 1
-        torch.nn.Conv2d(3, 32, kernel_size=3, padding=1),  # -> (32, 96, 96)
+        torch.nn.Conv2d(3, 32, kernel_size=3, padding=1),  
         torch.nn.BatchNorm2d(32),
         torch.nn.ReLU(),
-        torch.nn.MaxPool2d(2),  # -> (32, 48, 48)
+        torch.nn.MaxPool2d(2), 
         torch.nn.Dropout2d(0.2),
         
-        # Conv Block 2
-        torch.nn.Conv2d(32, 64, kernel_size=3, padding=1),  # -> (64, 48, 48)
+        torch.nn.Conv2d(32, 64, kernel_size=3, padding=1), 
         torch.nn.BatchNorm2d(64),
         torch.nn.ReLU(),
-        torch.nn.MaxPool2d(2),  # -> (64, 24, 24)
+        torch.nn.MaxPool2d(2), 
         torch.nn.Dropout2d(0.2),
-        
-        # Conv Block 3
-        torch.nn.Conv2d(64, 128, kernel_size=3, padding=1),  # -> (128, 24, 24)
+    
+        torch.nn.Conv2d(64, 128, kernel_size=3, padding=1), 
         torch.nn.BatchNorm2d(128),
         torch.nn.ReLU(),
-        torch.nn.MaxPool2d(2),  # -> (128, 12, 12)
-        torch.nn.Dropout2d(0.3),
+        torch.nn.MaxPool2d(2), 
+        torch.nn.Dropout2d(0.2),
         
-        # Conv Block 4
-        torch.nn.Conv2d(128, 256, kernel_size=3, padding=1),  # -> (256, 12, 12)
+        torch.nn.Conv2d(128, 256, kernel_size=3, padding=1),  
         torch.nn.BatchNorm2d(256),
         torch.nn.ReLU(),
-        torch.nn.MaxPool2d(2),  # -> (256, 6, 6)
-        torch.nn.Dropout2d(0.3),
+        torch.nn.MaxPool2d(2), 
+        torch.nn.Dropout2d(0.2),
         
-        # Flatten and Dense layers
-        torch.nn.Flatten(),  # -> (256 * 6 * 6 = 9216)
+        torch.nn.Flatten(), 
         
         torch.nn.Linear(9216, 512),
         torch.nn.BatchNorm1d(512),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.4),
+        torch.nn.Dropout(0.2),
         
         torch.nn.Linear(512, 128),
         torch.nn.BatchNorm1d(128),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.3),
+        torch.nn.Dropout(0.2),
         
-        torch.nn.Linear(128, 1)  # Binary classification
+        torch.nn.Linear(128, 1)
     )
 
     optimizer = torch.optim.Adam(model.parameters(), lr = learn)
@@ -59,11 +52,11 @@ def PcamCNNModel(X_train, y_train, X_test, y_test, epochCount, learn):
     
     X_train_tensor = torch.tensor(X_train).float() /255.0
     X_train_tensor = X_train_tensor.permute(0, 3, 1, 2)
-    y_train_tensor = torch.tensor(y_train).long()
+    y_train_tensor = torch.tensor(y_train).float().unsqueeze(1)
 
     X_test_tensor = torch.tensor(X_test).float() / 255.0
     X_test_tensor = X_test_tensor.permute(0, 3, 1, 2)
-    y_test_tensor = torch.tensor(y_test).long()
+    y_test_tensor = torch.tensor(y_test).float().unsqueeze(1)
 
     print("Pre-processing done")
 
