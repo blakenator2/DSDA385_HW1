@@ -37,11 +37,13 @@ def PcamMLPModel(X_train, y_train, X_test, y_test, epochCount, learn):
     
     X_train_tensor = torch.tensor(X_train).float() /255.0
     X_train_tensor = X_train_tensor.reshape(X_train_tensor.shape[0], -1)
-    y_train_tensor = torch.tensor(y_train).long()
+    y_train_tensor = torch.tensor(y_train).float().unsqueeze(1)
+
 
     X_test_tensor = torch.tensor(X_test).float() / 255.0
     X_test_tensor = X_test_tensor.reshape(X_test_tensor.shape[0], -1)
-    y_test_tensor = torch.tensor(y_test).long()
+    y_test_tensor = torch.tensor(y_test).float().unsqueeze(1)
+
 
     print("Pre-processing done")
 

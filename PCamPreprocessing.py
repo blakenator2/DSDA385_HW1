@@ -24,6 +24,15 @@ def getPcamData():
     print(f"y_test shape: {y_test.shape}")
     print(f"Label distribution - Train: {np.bincount(y_train)}")
     print(f"Label distribution - Test: {np.bincount(y_test)}")
+
+    train_half = len(X_train) // 2
+    test_half = len(X_test) // 2
+
+    X_train = X_train[:train_half]
+    y_train = y_train[:train_half]
+
+    X_test = X_test[:test_half]
+    y_test = y_test[:test_half]
     
     return X_train, y_train, X_test, y_test
 
