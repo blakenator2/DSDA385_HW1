@@ -5,7 +5,7 @@ import torch
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, ConfusionMatrixDisplay, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 
-def CifarCNNmodel(X_train, y_train, X_test, y_test, batchCount, epochCount):
+def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount):
     model = torch.nn.Sequential(
         torch.nn.Linear(3072, 1024),
         torch.nn.BatchNorm1d(1024),
