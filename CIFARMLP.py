@@ -13,7 +13,6 @@ def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount):
         torch.nn.Dropout(0.2),
         
         torch.nn.Linear(1024, 512),
-        torch.nn.BatchNorm1d(512),
         torch.nn.ReLU(),
         torch.nn.Dropout(0.2),
         
@@ -34,11 +33,11 @@ def CifarMLPModel(X_train, y_train, X_test, y_test, batchCount, epochCount):
     lossFn = torch.nn.CrossEntropyLoss()
 
     X_train_tensor = torch.tensor(X_train).float() /255.0
-    X_train_tensor = X_train_tensor.permute(0, 3, 1, 2)
+    X_train_tensor = X_train_tensor.reshape(X_train_tensor.shape[0], -1)
     y_train_tensor = torch.tensor(y_train).long()
 
     X_test_tensor = torch.tensor(X_test).float() / 255.0
-    X_test_tensor = X_test_tensor.permute(0, 3, 1, 2)
+    X_test_tensor = X_test_tensor.reshape(X_test_tensor.shape[0], -1)
     y_test_tensor = torch.tensor(y_test).long()
 
     print("Pre-processing done")
