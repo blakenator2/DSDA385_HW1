@@ -6,8 +6,9 @@ Adult           MLP              0.7900        0.4142       6.296967506408691   
                                                                                                    function could help the accuracy
 Adult           CNN              0.7947        0.3112       15.32059931755066
 
-CIFAR-100       MLP              
-CIFAR-10        CNN              0.4522       0.4370        492.013863325119
+CIFAR-100       MLP              0.2703        0.2632        147.31748056411743
+CIFAR-10        CNN              0.4522        0.4370        492.013863325119                       A deeper model would do much better, 
+                                                                                                   but I lack the computing time to do so
 
 PCam            MLP
 PCam            CNN
@@ -29,5 +30,6 @@ My outputs for both were very good! If I wanted to improve them more, I could im
 
 For the Cifar-100 dataset, I was able to use pytorch's built in version of this dataset, removing my need for data preprocessing.
 
+The CNN for the Cifar-100 dataset used two 2D convolutional layers that consisted of 2 filtering layers with 3x3 kernels. These layers created 32 and 64 channels respectively and both used pooling to reduce dimensionality. It then went through an MLP that consisted of a 4096 layer fedding into a layer of 256. This layer of 256 fed into a layer of 128 and the batch was normalized here. This layer of 128 fed into the output layer. I am overall pretty upset with the accuracy that I got for this dataset. I believe a deeper CNN, one using 1x1 CNN layers to reduce dimensionality, and possibly one with more epochs, would drastically improve the accuracy that I got. I wouldn't want to increase the amount of MLP layers as I saw lots of overfitting in my MLP model.
 
-
+The MLP for the Cifar-100 dataset had a 3072 input layer as that was the amount of inputs in the flattened dataset, which led to a 1024 node hidden layer. This hidden layer went to a 512 node hidden layer, where the batch was normalized. This hidden layer led to a 256 node hidden layer where the batch was normalized. This hidden layer led to the last hidden layer of 128, where the batch was normalized again. This layer then led to the output layer. I'm not sure how to improve this model very much. I already experinced a lot of overfitting as my validation loss was much higher than my training loss, which would suggest that more layers would make this problem worse. I could lessen the amount of nodes in these layers, but it is such a large input pool that it might hurt more than it helps. More dropout may help, but not by a significant amount. More epochs does not seem like it will do much as the loss was hitting a plateau.
