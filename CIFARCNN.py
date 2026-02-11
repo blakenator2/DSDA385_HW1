@@ -8,25 +8,34 @@ import matplotlib.pyplot as plt
 def CifarCNNmodel(X_train, y_train, X_test, y_test, batchCount, epochCount):
     model = torch.nn.Sequential(
         torch.nn.Conv2d(3, 32, kernel_size=3, padding=1),
+        torch.nn.BatchNorm2d(32),
+        torch.nn.ReLU(),
+        torch.nn.Conv2d(32, 32, kernel_size=3, padding=1),
+        torch.nn.BatchNorm2d(32),
         torch.nn.ReLU(),
         torch.nn.MaxPool2d(2),
+        torch.nn.Dropout(0.2),
+        
         torch.nn.Conv2d(32, 64, kernel_size=3, padding=1),
+        torch.nn.BatchNorm2d(64),
+        torch.nn.ReLU(),
+        torch.nn.Conv2d(64, 64, kernel_size=3, padding=1),
+        torch.nn.BatchNorm2d(64),
         torch.nn.ReLU(),
         torch.nn.MaxPool2d(2),
+        torch.nn.Dropout(0.3),
 
         torch.nn.Flatten(),
 
-        torch.nn.Linear(4096 ,64),
+        torch.nn.Linear(4096, 256),
+        torch.nn.BatchNorm1d(256),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.2),
-        torch.nn.Linear(64,32),
-        torch.nn.BatchNorm1d(32),
+        torch.nn.Dropout(0.5),
+        torch.nn.Linear(256, 128),
+        torch.nn.BatchNorm1d(128),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.2),
-        torch.nn.Linear(32,16),
-        torch.nn.ReLU(),
-        torch.nn.Dropout(0.2),
-        torch.nn.Linear(16,100)
+        torch.nn.Dropout(0.5),
+        torch.nn.Linear(128, 100)
     )
 
     optimizer = torch.optim.Adam(model.parameters())#lr = 0.001
