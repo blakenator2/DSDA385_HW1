@@ -18,4 +18,4 @@ import pandas as pd
 
 X_train, y_train, X_test, y_test = getData()
 # CifarCNNmodel(X_train, y_train, X_test, y_test, 64, 12)
-CifarMLPModel(X_train, y_train, X_test, y_test, 64, 10)
+CifarMLPModel(X_train, y_train, X_test, y_test, 64, 20)
