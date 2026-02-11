@@ -23,18 +23,18 @@ def CifarCNNmodel(X_train, y_train, X_test, y_test, batchCount, epochCount):
         torch.nn.BatchNorm2d(64),
         torch.nn.ReLU(),
         torch.nn.MaxPool2d(2),
-        torch.nn.Dropout(0.3),
+        torch.nn.Dropout(0.2),
 
         torch.nn.Flatten(),
 
         torch.nn.Linear(4096, 256),
         torch.nn.BatchNorm1d(256),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.5),
+        torch.nn.Dropout(0.2),
         torch.nn.Linear(256, 128),
         torch.nn.BatchNorm1d(128),
         torch.nn.ReLU(),
-        torch.nn.Dropout(0.5),
+        torch.nn.Dropout(0.2),
         torch.nn.Linear(128, 100)
     )
 
