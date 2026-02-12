@@ -35,14 +35,14 @@ def PcamMLPModel(X_train, y_train, X_test, y_test, epochCount, learn):
     optimizer = torch.optim.Adam(model.parameters(), lr = learn)
     lossFn = torch.nn.BCEWithLogitsLoss()
     
-    X_train_tensor = torch.tensor(X_train).float() /255.0
+    X_train_tensor = torch.from_numpy(X_train).float() /255.0
     X_train_tensor = X_train_tensor.reshape(X_train_tensor.shape[0], -1)
-    y_train_tensor = torch.tensor(y_train).float().unsqueeze(1)
+    y_train_tensor = torch.from_numpy(y_train).float().unsqueeze(1)
 
 
-    X_test_tensor = torch.tensor(X_test).float() / 255.0
+    X_test_tensor = torch.from_numpy(X_test).float() / 255.0
     X_test_tensor = X_test_tensor.reshape(X_test_tensor.shape[0], -1)
-    y_test_tensor = torch.tensor(y_test).float().unsqueeze(1)
+    y_test_tensor = torch.from_numpy(y_test).float().unsqueeze(1)
 
 
     print("Pre-processing done")
@@ -104,6 +104,7 @@ def PcamMLPModel(X_train, y_train, X_test, y_test, epochCount, learn):
                 f'Train Loss: {epoch_train_loss:.4f} '
                 f'Val Loss: {epoch_val_loss:.4f}')
     
+    print("Total Train Time in seconds:", time.time() - start) 
     # Evaluation
     model.eval()
     with torch.no_grad():

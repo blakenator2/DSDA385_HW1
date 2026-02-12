@@ -70,6 +70,7 @@ def PcamCNNModel(X_train, y_train, X_test, y_test, epochCount, learn):
     start = time.time()
     for epoch in range(epochs):
         model.train()
+        print(epoch)
         
         running_train_loss = 0.0
         num_batches = 0
@@ -116,6 +117,7 @@ def PcamCNNModel(X_train, y_train, X_test, y_test, epochCount, learn):
                 f'Train Loss: {epoch_train_loss:.4f} '
                 f'Val Loss: {epoch_val_loss:.4f}')
             
+    print("Total Train Time in seconds:", time.time() - start)  
     # Evaluation
     model.eval()
     with torch.no_grad():

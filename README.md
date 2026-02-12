@@ -10,8 +10,8 @@ CIFAR-100       MLP              0.2703        0.2632        147.31748056411743
 CIFAR-10        CNN              0.4522        0.4370        492.013863325119                       A deeper model would do much better, 
                                                                                                    but I lack the computing time to do so
 
-PCam            MLP             0.3645         0.2877       3016.0187394019273
-PCam            CNN             0.6231          0.3687      3487.9128496092157
+PCam            MLP             0.4958         0.2877       3016.0187394019273
+PCam            CNN             0.5356          0.3287     3487.9128496092157
 
 
 The objective of this homework assignment was to get comfortable in the pytorch library, to learn the differences in certain types of machine learning models, and to learn how these different models perform on different types of data. 
